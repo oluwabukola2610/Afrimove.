@@ -1,5 +1,5 @@
 import DashboardNav from "./DashboardNav";
-import Sidebar from "./Sidebar";
+import Sidebar from "./SideBar";
 
 const DashboardLayout = ({ children }) => {
   return (
