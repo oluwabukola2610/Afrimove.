@@ -1,8 +1,8 @@
-import PasswordReset from "@/components/auth/reset-password/PasswordReset";
+import ResetPass from "@/components/auth/reset-password/ResetPass";
 import React from "react";
 
 const page = () => {
-  return <PasswordReset />;
+  return <ResetPass />;
 };
 
 export default page;

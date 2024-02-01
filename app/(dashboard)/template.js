@@ -1,9 +1,8 @@
-import React from 'react'
+import DashboardLayout from "@/components/layouts/DashboardLayout";
+import React from "react";
 
-const template = () => {
-  return (
-    <div>template</div>
-  )
-}
+const template = ({ children }) => {
+  return <DashboardLayout>{children}</DashboardLayout>;
+};
 
-export default template
+export default template;

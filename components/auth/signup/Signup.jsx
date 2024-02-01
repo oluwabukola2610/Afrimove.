@@ -18,7 +18,6 @@ const Signup = () => {
           <img
             alt="Night"
             src="https://images.unsplash.com/photo-1568286353270-72b907e129bb?q=80&w=1742&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-            // src="https://images.unsplash.com/photo-1617195737496-bc30194e3a19?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80"
             className="absolute inset-0 h-full w-full object-cover opacity-80"
           />
 
@@ -77,137 +76,136 @@ const Signup = () => {
                 Create an account to continue
               </p>
             </div>
-<Form>
-            <div className="mt-8 grid grid-cols-6 gap-6 border py-10 px-5 rounded-lg shadow-md">
-              <div className="col-span-6 sm:col-span-3">
-                <label
-                  htmlFor="FirstName"
-                  className="block text-sm font-medium text-gray-700 mb-3"
+            <Form>
+              <div className="mt-8 grid grid-cols-6 gap-6 border py-10 px-5 rounded-lg shadow-md">
+                <div className="col-span-6 sm:col-span-3">
+                  <label
+                    htmlFor="FirstName"
+                    className="block text-sm font-medium text-gray-700 mb-3"
                   >
-                  First Name
-                </label>
+                    First Name
+                  </label>
 
-                <Input
-                  className="w-full "
-                  placeholder="First Name"
-                  id="firstnameme"
-                  type="text"
-                  name="firstname"
-                  required
-                />
-              </div>
+                  <Input
+                    className="w-full "
+                    placeholder="First Name"
+                    id="firstnameme"
+                    type="text"
+                    name="firstname"
+                    required
+                  />
+                </div>
 
-              <div className="col-span-6 sm:col-span-3">
-                <label
-                  htmlFor="LastName"
-                  className="block text-sm font-medium text-gray-700 mb-3"
+                <div className="col-span-6 sm:col-span-3">
+                  <label
+                    htmlFor="LastName"
+                    className="block text-sm font-medium text-gray-700 mb-3"
                   >
-                  Last Name
-                </label>
+                    Last Name
+                  </label>
 
-                <Input
-                  className="w-full "
-                  placeholder="Last Name"
-                  id="lastname"
-                  type="text"
-                  name="lastname"
-                  required
-                />
-              </div>
+                  <Input
+                    className="w-full "
+                    placeholder="Last Name"
+                    id="lastname"
+                    type="text"
+                    name="lastname"
+                    required
+                  />
+                </div>
 
-              <div className="col-span-6">
-                <label
-                  htmlFor="Email"
-                  className="block text-sm font-medium text-gray-700 mb-3"
+                <div className="col-span-6">
+                  <label
+                    htmlFor="Email"
+                    className="block text-sm font-medium text-gray-700 mb-3"
                   >
-                  {" "}
-                  Email{" "}
-                </label>
+                    {" "}
+                    Email{" "}
+                  </label>
 
-                <Input
-                  className="w-full "
-                  placeholder="Email Address"
-                  id="email"
-                  type="email"
-                  name="email"
-                  required
-                />
-              </div>
+                  <Input
+                    className="w-full "
+                    placeholder="Email Address"
+                    id="email"
+                    type="email"
+                    name="email"
+                    required
+                  />
+                </div>
 
-              <div className="col-span-6 sm:col-span-3">
-                <label
-                  htmlFor="Password"
-                  className="block text-sm font-medium text-gray-700 mb-3"
+                <div className="col-span-6 sm:col-span-3">
+                  <label
+                    htmlFor="Password"
+                    className="block text-sm font-medium text-gray-700 mb-3"
                   >
-                  {" "}
-                  Password{" "}
-                </label>
+                    {" "}
+                    Password{" "}
+                  </label>
 
-                <PasswordInput
-                  className="w-full"
-                  placeholder="Enter your password"
-                  id="password"
-                  type="password"
-                  name="password"
-                  required
-                />
-              </div>
+                  <PasswordInput
+                    className="w-full"
+                    placeholder="Enter your password"
+                    id="password"
+                    type="password"
+                    name="password"
+                    required
+                  />
+                </div>
 
-              <div className="col-span-6 sm:col-span-3">
-                <label
-                  htmlFor="PasswordConfirmation"
-                  className="block text-sm font-medium text-gray-700 mb-3"
+                <div className="col-span-6 sm:col-span-3">
+                  <label
+                    htmlFor="PasswordConfirmation"
+                    className="block text-sm font-medium text-gray-700 mb-3"
                   >
-                  Confirm Password
-                </label>
+                    Confirm Password
+                  </label>
 
-                <PasswordInput
-                  className="w-full"
-                  placeholder="Confirm your password"
-                  id="password"
-                  type="password"
-                  name="password"
-                  required
-                />
-              </div>
+                  <PasswordInput
+                    className="w-full"
+                    placeholder="Confirm your password"
+                    id="password"
+                    type="password"
+                    name="password"
+                    required
+                  />
+                </div>
 
-              <div className="col-span-6">
-                <p className="text-sm text-gray-500">
-                  By creating an account, you agree to our {""}
-                  <a href="#" className="text-gray-700 underline">
-                    terms and conditions
-                  </a>
-                  {""} and {""}
-                  <a href="#" className="text-gray-700 underline">
-                    privacy policy
-                  </a>
-                  .
-                </p>
-              </div>
+                <div className="col-span-6">
+                  <p className="text-sm text-gray-500">
+                    By creating an account, you agree to our {""}
+                    <a href="#" className="text-gray-700 underline">
+                      terms and conditions
+                    </a>
+                    {""} and {""}
+                    <a href="#" className="text-gray-700 underline">
+                      privacy policy
+                    </a>
+                    .
+                  </p>
+                </div>
 
-              <div className="col-span-6 space-y-2 sm:items-center sm:gap-4">
-                <Button
-                  onClick={() => route.push("/login")}
-                  className="!h-[3rem]  w-full !border-blue-600 !bg-blue-600 !text-white !font-semibold"
+                <div className="col-span-6 space-y-2 sm:items-center sm:gap-4">
+                  <Button
+                    onClick={() => route.push("/otp")}
+                    className="!h-[3rem]  w-full !border-blue-600 !bg-blue-600 !text-white !font-semibold"
                   >
-                  Create an account
-                </Button>
+                    Create an account
+                  </Button>
 
-                <p className="mt-4 text-sm text-gray-500 sm:mt-0">
-                  Already have an account? {""}
-                  <Link href="/login" className="text-gray-700 underline">
-                    Login
-                  </Link>
-                  .
-                </p>
+                  <p className="mt-4 text-sm text-gray-500 sm:mt-0">
+                    Already have an account? {""}
+                    <Link href="/login" className="text-gray-700 underline">
+                      Login
+                    </Link>
+                    .
+                  </p>
+                </div>
               </div>
-            </div>
             </Form>
           </div>
         </main>
       </div>
     </section>
-
   );
 };
 
