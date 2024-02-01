@@ -1,5 +1,5 @@
 import DashboardNav from "./DashboardNav";
-import Sidebar from "./SideBar";
+import SideBar from "./SideBar";
 
 const DashboardLayout = ({ children }) => {
   return (
@@ -9,7 +9,7 @@ const DashboardLayout = ({ children }) => {
         <DashboardNav />
         {children}
       </div>
-      <Sidebar />
+      <SideBar />
     </div>
   );
 };

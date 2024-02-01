@@ -1,6 +1,6 @@
 import { IoCarSportSharp } from "react-icons/io5";
 import { MdFavoriteBorder, MdListAlt, MdSpaceDashboard } from "react-icons/md";
-export const sidebarData = [
+export const SidebarData = [
   {
     icon: <MdSpaceDashboard size={25} />,
     key: "/dashboard",

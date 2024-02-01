@@ -1,17 +1,17 @@
 "use client";
 import React from "react";
-import { sidebarData } from "./SideBarData";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { SidebarData } from "./SidebarData";
 
-const Sidebar = () => {
+const SideBar = () => {
   const router = usePathname();
   return (
     <div className="drawer-side z-10">
       <label htmlFor="my-drawer-2" className="drawer-overlay"></label>
       <aside className="flex flex-col  space-y-8 w-[5.4rem] h-screen overflow-hidden shadow-xl bg-[#F7F8FA] border-r border-r-gray-200 py-2 overflow-y-scroll">
         <div className="flex flex-col gap-[35px] mt-20">
-          {sidebarData.map((data, index) => (
+          {SidebarData.map((data, index) => (
             <Link href={data.key} key={index}>
               <div className="relative flex items-center justify-between">
                 <div
@@ -44,4 +44,4 @@ const Sidebar = () => {
   );
 };
 
-export default Sidebar;
+export default SideBar;
