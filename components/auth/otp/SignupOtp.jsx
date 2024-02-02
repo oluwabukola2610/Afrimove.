@@ -3,9 +3,19 @@ import Link from "next/link";
 import OtpInput from "react18-input-otp";
 import { CustomButton as Button } from "@/lib/AntdComponent";
 import { useState } from "react";
+import { useValidateOtpMutation } from "@/services/auth";
 
 const SignupOtp = () => {
   const [code, setCode] = useState("");
+  const [register, { isLoading }] = useValidateOtpMutation();
+
+  const handleOtp = () => {
+    validateOtp({ otp: code, email: ""})
+      .unwrap()
+      .then((res) => {
+        console.log(res);
+      });
+  };
   return (
     <div className="max-w-[1640px] mx-auto py-5 px-6 md:px-20  h-screen overflow-y-auto">
       <Link href="/" className="py-3 font-semibold text-[25px]">

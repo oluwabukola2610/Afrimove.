@@ -1,16 +1,54 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
-import { Form } from "antd";
+import { Form, message } from "antd";
 import {
-  CustomButton as Button,
   CustomInput as Input,
   CustomPasswordInput as PasswordInput,
 } from "@/lib/AntdComponent";
+import { LoadingOutlined } from "@ant-design/icons";
+import { useRegisterMutation } from "@/services/auth";
+import { passwordSchema } from "@/lib/PasswordSchema";
+import { useRouter } from "next/navigation";
+
 const Signup = () => {
   const route = useRouter();
+  const [validationError, setValidationError] = useState("");
+  const [formData, setFormData] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+    password: "",
+  });
+  const [register, { isLoading }] = useRegisterMutation();
+  const handleRegister = () => {
+    if (!validationError) {
+      register(formData)
+        .unwrap()
+        .then((res) => {
+          message.success(res.message);
+          route.replace("/otp");
+        })
+        .catch((err) => {
+          message.error(
+            err?.data?.message || err?.message || "something went wrong"
+          );
+        });
+    }
 
+    console.log(formData);
+  };
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    if (name === "password") {
+      passwordSchema
+        .validate({ password: value })
+        .then(() => setValidationError(""))
+        .catch((error) => setValidationError(error.message));
+    }
+    setFormData((prev) => ({ ...prev, [name]: value }));
+  };
   return (
     <section className="bg-white">
       <div className="lg:grid lg:min-h-screen lg:grid-cols-12">
@@ -76,11 +114,11 @@ const Signup = () => {
                 Create an account to continue
               </p>
             </div>
-            <Form>
+            <Form onFinish={handleRegister}>
               <div className="mt-8 grid grid-cols-6 gap-6 border py-10 px-5 rounded-lg shadow-md">
                 <div className="col-span-6 sm:col-span-3">
                   <label
-                    htmlFor="FirstName"
+                    htmlFor="firstname"
                     className="block text-sm font-medium text-gray-700 mb-3"
                   >
                     First Name
@@ -89,16 +127,19 @@ const Signup = () => {
                   <Input
                     className="w-full "
                     placeholder="First Name"
-                    id="firstnameme"
+                    id="firstname"
+                    name="firstName"
                     type="text"
-                    name="firstname"
+                    value={formData.firstName}
+                    onChange={handleChange}
                     required
+                    size="large"
                   />
                 </div>
 
                 <div className="col-span-6 sm:col-span-3">
                   <label
-                    htmlFor="LastName"
+                    htmlFor="lastname"
                     className="block text-sm font-medium text-gray-700 mb-3"
                   >
                     Last Name
@@ -109,14 +150,17 @@ const Signup = () => {
                     placeholder="Last Name"
                     id="lastname"
                     type="text"
-                    name="lastname"
+                    name="lastName"
+                    value={formData.lastName}
+                    onChange={handleChange}
                     required
+                    size="large"
                   />
                 </div>
 
                 <div className="col-span-6">
                   <label
-                    htmlFor="Email"
+                    htmlFor="email-address"
                     className="block text-sm font-medium text-gray-700 mb-3"
                   >
                     {" "}
@@ -125,17 +169,20 @@ const Signup = () => {
 
                   <Input
                     className="w-full "
-                    placeholder="Email Address"
-                    id="email"
+                    placeholder="Email"
+                    size="large"
+                    required
                     type="email"
                     name="email"
-                    required
+                    value={formData.email}
+                    onChange={handleChange}
+                    id="email-address"
                   />
                 </div>
 
-                <div className="col-span-6 sm:col-span-3">
+                <div className="col-span-6">
                   <label
-                    htmlFor="Password"
+                    htmlFor="password"
                     className="block text-sm font-medium text-gray-700 mb-3"
                   >
                     {" "}
@@ -148,26 +195,63 @@ const Signup = () => {
                     id="password"
                     type="password"
                     name="password"
+                    value={formData.password}
+                    onChange={handleChange}
                     required
+                    size="large"
                   />
-                </div>
-
-                <div className="col-span-6 sm:col-span-3">
-                  <label
-                    htmlFor="PasswordConfirmation"
-                    className="block text-sm font-medium text-gray-700 mb-3"
-                  >
-                    Confirm Password
-                  </label>
-
-                  <PasswordInput
-                    className="w-full"
-                    placeholder="Confirm your password"
-                    id="password"
-                    type="password"
-                    name="password"
-                    required
-                  />
+                  {formData.password && validationError && (
+                    <ul className="bg-white rounded-[5px] p-[3%]">
+                      <li className="flex items-center gap-[0.5rem]">
+                        <span
+                          className={`h-[13px] w-[13px] rounded-full ${
+                            /^(.{8,})$/.test(formData.password)
+                              ? "bg-black"
+                              : "bg-slate-300"
+                          }`}
+                        ></span>
+                        <p className="text-[#252B33] text-[12px] font-[400]">
+                          A minimum of 8 characters
+                        </p>
+                      </li>
+                      <li className="flex items-center gap-[0.5rem]">
+                        <span
+                          className={`h-[13px] w-[13px] rounded-full ${
+                            /.*[a-zA-Z].*/.test(formData.password)
+                              ? "bg-black"
+                              : "bg-slate-300"
+                          }`}
+                        ></span>
+                        <p className="text-[#252B33] text-[12px] font-[400]">
+                          At least one letter
+                        </p>
+                      </li>
+                      <li className="flex items-center gap-[0.5rem]">
+                        <span
+                          className={`h-[13px] w-[13px] rounded-full ${
+                            /.*[0-9].*/.test(formData.password)
+                              ? "bg-black"
+                              : "bg-slate-300"
+                          }`}
+                        ></span>
+                        <p className="text-[#252B33] text-[12px] font-[400]">
+                          At least one number
+                        </p>
+                      </li>
+                      <li className="flex items-center gap-[0.5rem]">
+                        <span
+                          className={`h-[13px] w-[13px] rounded-full ${
+                            /[!@#$%^&*(),.?":{}|<>]/.test(formData.password)
+                              ? "bg-black"
+                              : "bg-slate-300"
+                          }`}
+                        ></span>
+                        <p className="text-[#252B33] text-[12px] font-[400]">
+                          At least one special character
+                        </p>
+                      </li>
+                    </ul>
+                  )}
                 </div>
 
                 <div className="col-span-6">
@@ -185,12 +269,17 @@ const Signup = () => {
                 </div>
 
                 <div className="col-span-6 space-y-2 sm:items-center sm:gap-4">
-                  <Button
-                    onClick={() => route.push("/otp")}
-                    className="!h-[3rem]  w-full !border-blue-600 !bg-blue-600 !text-white !font-semibold"
+                  <button
+                    disabled={isLoading}
+                    type="submit"
+                    className="w-full my-4 text-white focus:outline-none font-bold rounded-xl text-md px-5 py-2.5 text-center bg-blue-600 hover:duration-300 focus:shadow-outline"
                   >
-                    Create an account
-                  </Button>
+                    {isLoading ? (
+                      <LoadingOutlined size={30} />
+                    ) : (
+                      "Create Account"
+                    )}
+                  </button>
 
                   <p className="mt-4 text-sm text-gray-500 sm:mt-0">
                     Already have an account? {""}

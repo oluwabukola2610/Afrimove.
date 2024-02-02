@@ -15,7 +15,6 @@ const DashboardNav = () => {
     </Menu>
   );
 
-  // Function to format the current date as "Month Day, Year"
   const getCurrentDate = () => {
     const currentDate = new Date();
     const options = { month: 'long', day: 'numeric', year: 'numeric' };
