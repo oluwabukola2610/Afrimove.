@@ -1,16 +1,46 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import {
-  CustomButton as Button,
   CustomInput as Input,
   CustomPasswordInput as PasswordInput,
 } from "@/lib/AntdComponent";
-import { Form } from "antd";
+import { Form, message } from "antd";
+import { LoadingOutlined } from "@ant-design/icons";
+import { useLoginMutation } from "@/services/auth";
 const Login = () => {
   const route = useRouter();
+  const [formData, setFormData] = useState({
+    email: "",
+    password: "",
+  });
+  const [Login, { isLoading }] = useLoginMutation();
+  const handleLogin = () => {
+    const { email, password } = formData;
+    if (!email || !password) {
+      message.error("Please fill in all fields");
+      return;
+    }
+    Login(formData)
+      .unwrap()
+      .then((res) => {
+        message.success(res.message);
+        route.replace("/dashboard");
+      })
+      .catch((err) => {
+        console.log(err);
+        message.error(
+          err?.data?.error || err?.message || "something went wrong"
+        );
+      });
 
+    console.log(formData);
+  };
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+  };
   return (
     <section className="bg-white">
       <div className="lg:grid lg:min-h-screen lg:grid-cols-12">
@@ -48,7 +78,7 @@ const Login = () => {
         </section>
 
         <main className="flex items-center justify-center px-8 py-8 sm:px-12 lg:col-span-7 lg:px-16 lg:py-12 xl:col-span-6">
-          <div className="max-w-xl lg:max-w-3xl">
+        <div className="max-w-xl lg:max-w-3xl">
             <div className="relative -mt-16 block lg:hidden">
               <a
                 className="inline-flex h-16 w-16 items-center justify-center rounded-full bg-white text-blue-600 sm:h-20 sm:w-20"
@@ -76,8 +106,8 @@ const Login = () => {
                 Login to continue
               </p>
             </div>
-            <Form>
-              <div className="mt-8 grid grid-cols-6 gap-6 border py-10 px-5 rounded-lg shadow-md md:min-w-[30rem] min-w-max">
+            <Form onFinish={handleLogin}>
+              <div className="mt-8 grid grid-cols-6 gap-6 border py-10 px-5 rounded-lg shadow-md md:min-w-[40rem] min-w-max">
                 <div className="col-span-6">
                   <label
                     htmlFor="Email"
@@ -89,11 +119,14 @@ const Login = () => {
 
                   <Input
                     className="w-full "
-                    placeholder="Email Address"
-                    id="email"
+                    placeholder="Email"
+                    size="large"
+                    required
                     type="email"
                     name="email"
-                    required
+                    value={formData.email}
+                    onChange={handleChange}
+                    id="email-address"
                   />
                 </div>
 
@@ -111,17 +144,21 @@ const Login = () => {
                     id="password"
                     type="password"
                     name="password"
+                    value={formData.password}
+                    onChange={handleChange}
                     required
+                    size="large"
                   />
                 </div>
 
                 <div className="col-span-6 sm:items-center sm:gap-4 space-y-2">
-                  <Button
-                    onClick={() => route.push("/dashboard")}
-                    className="!h-[3rem]  w-full !border-blue-600 !bg-blue-600 !text-white !font-semibold"
+                  <button
+                    disabled={isLoading}
+                    type="submit"
+                    className="w-full my-4 text-white focus:outline-none font-bold rounded-xl text-md px-5 py-2.5 text-center bg-blue-600 hover:duration-300 focus:shadow-outline"
                   >
-                    Login
-                  </Button>
+                    {isLoading ? <LoadingOutlined size={30} /> : "Login"}
+                  </button>
 
                   <div className="flex justify-between">
                     <Link

@@ -1,13 +1,31 @@
 "use client";
-import { Form } from "antd";
+import { Form, message } from "antd";
 import Link from "next/link";
 import {
-  CustomButton as Button,
   CustomInput as Input,
 } from "@/lib/AntdComponent";
 import { useRouter } from "next/navigation";
+import { useForgetPassMutation } from "@/services/auth";
+import { LoadingOutlined } from "@ant-design/icons";
 const ForgetPass = () => {
   const route = useRouter();
+  const email = localStorage.getItem("email");
+  const [forgetPass, { isLoading }] = useForgetPassMutation();
+  const handleforgetPass = () => {
+    forgetPass({email: email})
+      .unwrap()
+      .then((res) => {
+        console.log(res);
+        // message.success(res.message);
+        // route.replace("/login");
+      })
+      .catch((err) => {
+        console.log(err);
+        message.error(
+          err?.data?.message || err?.message || "something went wrong"
+        );
+      });
+  };
   return (
     <div className="max-w-[1640px] mx-auto py-5 px-6 md:px-20 h-screen overflow-y-auto">
       <Link href="/" className="py-3 font-semibold text-[25px]">
@@ -23,7 +41,7 @@ const ForgetPass = () => {
           </p>
         </div>
         <div className="p-6 w-full lg:max-w-md shadow-md rounded-md border bg-white/80">
-          <Form>
+          <Form onFinish={handleforgetPass}>
             <div className="mb-6">
               <label
                 htmlFor="Email"
@@ -42,12 +60,12 @@ const ForgetPass = () => {
                 required
               />
             </div>
-            <Button
-              onClick={() => route.push("/reset-password")}
-              className="!h-[3rem]  w-full !border-blue-600 !bg-blue-600 !text-white !font-semibold !mb-4"
+            <button
+              disabled={isLoading}
+              className="w-full my-4 text-white focus:outline-none font-bold rounded-xl text-md px-5 py-2.5 text-center bg-blue-600 hover:duration-300 focus:shadow-outline"
             >
-              Recover Password
-            </Button>
+              {isLoading ? <LoadingOutlined size={30} /> : "Recover Password"}
+            </button>
             <Link href="/login" className="font-bold py-4  text-center text-sm">
               Return to Login
             </Link>

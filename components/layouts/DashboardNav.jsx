@@ -1,15 +1,21 @@
-"use client"
+"use client";
 import React from "react";
 import { IoNotificationsOutline } from "react-icons/io5";
 import { CgMenuRightAlt } from "react-icons/cg";
 import { CiSearch } from "react-icons/ci";
 import { MdOutlineCalendarMonth } from "react-icons/md";
 import { Avatar, Dropdown, Menu } from "antd";
+import { useGetUserQuery } from "@/services/auth";
+import { UserOutlined } from "@ant-design/icons";
 
 const DashboardNav = () => {
+  const { data: user, isLoading } = useGetUserQuery();
   const menu = (
     <Menu>
-      <Menu.Item key="logout" className="font-semibold text-lg hover:bg-gray-200">
+      <Menu.Item
+        key="logout"
+        className="font-semibold text-lg hover:bg-gray-200"
+      >
         Logout
       </Menu.Item>
     </Menu>
@@ -17,8 +23,8 @@ const DashboardNav = () => {
 
   const getCurrentDate = () => {
     const currentDate = new Date();
-    const options = { month: 'long', day: 'numeric', year: 'numeric' };
-    return currentDate.toLocaleDateString('en-US', options);
+    const options = { month: "long", day: "numeric", year: "numeric" };
+    return currentDate.toLocaleDateString("en-US", options);
   };
 
   return (
@@ -47,15 +53,19 @@ const DashboardNav = () => {
           </div>
           <Dropdown overlay={menu} placement="bottomRight">
             <div className="flex gap-2 justify-between items-center px-[12px] py-[6px] rounded-[8px] bg-success-5">
-              <Avatar size={40} src="" />
-              <div>
-                <h2 className="text-[#2E2E3A] font-semibold capitalize">
-                  ok ok
-                </h2>
-                <p className="text-[#9A9AAF] text-[0.75rem] font-light text-center">
-                  ok@gmail.com
-                </p>
-              </div>
+              <Avatar icon={<UserOutlined />} />
+              {isLoading ? (
+                <div>loading...</div>
+              ) : (
+                <div>
+                  <h2 className="text-[#2E2E3A] font-semibold capitalize">
+                    {user?.firstName} {user?.lastName}
+                  </h2>
+                  <p className="text-[#9A9AAF] text-[0.75rem] font-light text-center">
+                    {user?.email}
+                  </p>
+                </div>
+              )}
             </div>
           </Dropdown>
           <label htmlFor="my-drawer-2" className="flex md:hidden  px-3">

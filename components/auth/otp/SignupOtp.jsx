@@ -1,19 +1,29 @@
 "use client";
 import Link from "next/link";
 import OtpInput from "react18-input-otp";
-import { CustomButton as Button } from "@/lib/AntdComponent";
 import { useState } from "react";
 import { useValidateOtpMutation } from "@/services/auth";
+import { LoadingOutlined } from "@ant-design/icons";
+import { Form, message } from "antd";
+import { useRouter } from "next/navigation";
 
 const SignupOtp = () => {
+  const route = useRouter();
   const [code, setCode] = useState("");
-  const [register, { isLoading }] = useValidateOtpMutation();
-
+  const email = localStorage.getItem("email");
+  const [validateOtp, { isLoading }] = useValidateOtpMutation();
   const handleOtp = () => {
-    validateOtp({ otp: code, email: ""})
+    validateOtp({ otp: code, email })
       .unwrap()
       .then((res) => {
-        console.log(res);
+        message.success(res.message);
+        route.replace("/login");
+      })
+      .catch((err) => {
+        console.log(err);
+        message.error(
+          err?.data?.message || err?.message || "something went wrong"
+        );
       });
   };
   return (
@@ -31,7 +41,10 @@ const SignupOtp = () => {
           </p>
         </div>
         <div className="p-6 w-full lg:max-w-md shadow-md space-y-3 rounded-md border bg-white/80 flex flex-col items-center justify-center">
-          <form className="space-y-6 flex flex-col justify-center items-center">
+          <Form
+            onFinish={handleOtp}
+            className="!space-y-6 flex flex-col !justify-center items-center"
+          >
             <h1 className="text-xl font-semibold text-center">
               Kindly enter your OTP <br /> to verify account
             </h1>
@@ -58,13 +71,13 @@ const SignupOtp = () => {
                 outline: "none",
               }}
             />
-            <Button
-              onClick={() => route.push("/dashboard")}
-              className="!h-[3rem]  w-full !border-blue-600 !bg-blue-600 !text-white !font-semibold !mb-4"
+            <button
+              disabled={isLoading}
+              className="w-full my-4 text-white focus:outline-none font-bold rounded-xl text-md px-5 py-2.5 text-center bg-blue-600 hover:duration-300 focus:shadow-outline"
             >
-              Confirm
-            </Button>
-          </form>
+              {isLoading ? <LoadingOutlined size={30} /> : "Submit"}
+            </button>
+          </Form>
           {/* {timerComplete ? (
             <p className="py-4 text-sm text-grayText ">
               Didn’t get the code?{" "}

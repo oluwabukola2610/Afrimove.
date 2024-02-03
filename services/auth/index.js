@@ -14,11 +14,49 @@ export const authApi = createApi({
     }),
     validateOtp: builder.mutation({
       query: (body) => ({
-        url: "/otp",
+        url: "/auth/otp",
         method: "POST",
         body,
       }),
     }),
+    Login: builder.mutation({
+      query: (body) => ({
+        url: "/auth/login",
+        method: "POST",
+        credentials: "include",
+        body,
+      }),
+    }),
+    getUser: builder.query({
+      query: () => ({
+        url: "/user/data",
+        method: "GET",
+        credentials: "include",
+      }),
+      transformResponse: (response) => {
+        return response?.userData;
+      },
+    }),
+    forgetPass: builder.mutation({
+      query: (body) => ({
+        url: "/auth/forgot-pass",
+        method: "POST",
+        body,
+      }),
+    }),
+    Logout: builder.query({
+      query: () => ({
+        url: "/auth/logout",
+        method: "DELETE",
+        credentials: "include",
+      }),
+    }),
   }),
 });
-export const { useRegisterMutation,useValidateOtpMutation } = authApi;
+export const {
+  useRegisterMutation,
+  useValidateOtpMutation,
+  useLoginMutation,
+  useGetUserQuery,
+  useForgetPassMutation
+} = authApi;

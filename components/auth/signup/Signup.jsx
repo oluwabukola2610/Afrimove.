@@ -26,12 +26,14 @@ const Signup = () => {
       register(formData)
         .unwrap()
         .then((res) => {
+          localStorage.setItem("email", res.userEmail);
           message.success(res.message);
           route.replace("/otp");
         })
         .catch((err) => {
+          console.log(err);
           message.error(
-            err?.data?.message || err?.message || "something went wrong"
+            err?.data?.error || err?.message || "something went wrong"
           );
         });
     }
