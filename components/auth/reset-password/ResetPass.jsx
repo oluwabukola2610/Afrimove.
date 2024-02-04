@@ -1,10 +1,10 @@
+"use client"
 import { useEffect, useState } from "react";
 import { useRouter, useSearchParams } from "next/router";
 import { useResetPassMutation } from "@/services/auth";
 import { Form, message } from "antd";
 import Link from "next/link";
 import {
-  CustomButton as Button,
   CustomPasswordInput as PasswordInput,
 } from "@/lib/AntdComponent";
 import { passwordSchema } from "@/lib/PasswordSchema";
