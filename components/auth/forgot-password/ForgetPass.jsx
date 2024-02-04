@@ -12,17 +12,17 @@ const ForgetPass = () => {
   const email = localStorage.getItem("email");
   const [forgetPass, { isLoading }] = useForgetPassMutation();
   const handleforgetPass = () => {
-    forgetPass({email: email})
+    forgetPass(email)
       .unwrap()
       .then((res) => {
         console.log(res);
-        // message.success(res.message);
-        // route.replace("/login");
+        message.success(res.message);
+        route.replace("/login");
       })
       .catch((err) => {
         console.log(err);
         message.error(
-          err?.data?.message || err?.message || "something went wrong"
+          err?.data?.error || err?.message || "something went wrong"
         );
       });
   };

@@ -39,9 +39,16 @@ export const authApi = createApi({
     }),
     forgetPass: builder.mutation({
       query: (body) => ({
-        url: "/auth/forgot-pass",
+        url: "/auth/forgot_pass",
         method: "POST",
         body,
+      }),
+    }),
+    ResetPass: builder.mutation({
+      query: ({ id, token, password }) => ({
+        url: `/auth/pass_reset/${id}/${token}`,
+        method: "POST",
+        body: { password },
       }),
     }),
     Logout: builder.query({
@@ -58,5 +65,6 @@ export const {
   useValidateOtpMutation,
   useLoginMutation,
   useGetUserQuery,
-  useForgetPassMutation
+  useForgetPassMutation,
+  useResetPassMutation,
 } = authApi;
