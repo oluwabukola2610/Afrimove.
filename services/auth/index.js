@@ -44,7 +44,7 @@ export const authApi = createApi({
         body,
       }),
     }),
-    ResetPass: builder.mutation({
+    resetPass: builder.mutation({
       query: ({ id, token, password }) => ({
         url: `/auth/pass_reset/${id}/${token}`,
         method: "POST",

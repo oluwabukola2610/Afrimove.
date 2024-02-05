@@ -11,8 +11,7 @@ import { passwordSchema } from "@/lib/PasswordSchema";
 import { LoadingOutlined } from "@ant-design/icons";
 
 const ResetPass = () => {
-  const route = useRouter();
-  const [ResetPass, { isLoading }] = useResetPassMutation();
+  const [resetPass, { isLoading }] = useResetPassMutation();
   const [formData, setFormData] = useState({
     password: "",
     confirmPassword: "",
@@ -45,7 +44,7 @@ const ResetPass = () => {
     e.preventDefault();
     if (!validationError) {
       const { confirmPassword, ...dataToSend } = formData; 
-      ResetPass(dataToSend)
+      resetPass(dataToSend)
         .unwrap()
         .then((res) => {
           console.log(res);
