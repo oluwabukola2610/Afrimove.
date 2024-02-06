@@ -1,12 +1,10 @@
-"use client"
+"use client";
 import { useEffect, useState } from "react";
 import { useRouter, useSearchParams } from "next/router";
 import { useResetPassMutation } from "@/services/auth";
 import { Form, message } from "antd";
 import Link from "next/link";
-import {
-  CustomPasswordInput as PasswordInput,
-} from "@/lib/AntdComponent";
+import { CustomPasswordInput as PasswordInput } from "@/lib/AntdComponent";
 import { passwordSchema } from "@/lib/PasswordSchema";
 import { LoadingOutlined } from "@ant-design/icons";
 
@@ -15,17 +13,9 @@ const ResetPass = () => {
   const [formData, setFormData] = useState({
     password: "",
     confirmPassword: "",
-    id: "",
-    token: "",
+    passwordOtp: "",
   });
   const [validationError, setValidationError] = useState("");
-  const searchParams = useSearchParams();
-
-  useEffect(() => {
-    const token = searchParams.get("token");
-    const id = searchParams.get("id");
-    setFormData((prev) => ({ ...prev, id: id || "", token: token || "" }));
-  }, [searchParams]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -43,7 +33,7 @@ const ResetPass = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!validationError) {
-      const { confirmPassword, ...dataToSend } = formData; 
+      const { confirmPassword, ...dataToSend } = formData;
       resetPass(dataToSend)
         .unwrap()
         .then((res) => {
@@ -71,6 +61,25 @@ const ResetPass = () => {
         </div>
         <div className="p-6 w-full lg:max-w-md shadow-md rounded-md border bg-white/80">
           <Form onSubmit={handleSubmit}>
+            <div className="mb-4">
+              <label
+                htmlFor="pass-otp"
+                className="block text-sm font-medium text-gray-700 mb-3"
+              >
+                Password Otp
+              </label>
+              <Input
+                className="w-full "
+                placeholder="password-otp"
+                size="large"
+                required
+                type="text"
+                name="passwordOtp"
+                value={formData.passwordOtp}
+                onChange={handleChange}
+                id="pass-otp"
+              />
+            </div>
             <div className="mb-4">
               <label
                 htmlFor="newPassword"
