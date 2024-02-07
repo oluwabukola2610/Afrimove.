@@ -10,9 +10,11 @@ import { LoadingOutlined } from "@ant-design/icons";
 import { useRegisterMutation } from "@/services/auth";
 import { passwordSchema } from "@/lib/PasswordSchema";
 import { useRouter } from "next/navigation";
+import { useStoredData } from "@/components/hook/useAuth";
 
 const Signup = () => {
   const route = useRouter();
+  const { setEmail } = useStoredData;
   const [validationError, setValidationError] = useState("");
   const [formData, setFormData] = useState({
     firstName: "",
@@ -26,7 +28,7 @@ const Signup = () => {
       register(formData)
         .unwrap()
         .then((res) => {
-          localStorage.setItem("email", res.userEmail);
+          setEmail(res.userEmail);
           message.success(res.message);
           route.replace("/otp");
         })

@@ -8,6 +8,7 @@ import {
 } from "@/lib/AntdComponent";
 import { passwordSchema } from "@/lib/PasswordSchema";
 import { LoadingOutlined } from "@ant-design/icons";
+import { useState } from "react";
 
 const ResetPass = () => {
   const [resetPass, { isLoading }] = useResetPassMutation();

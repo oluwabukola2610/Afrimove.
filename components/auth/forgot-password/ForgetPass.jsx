@@ -1,15 +1,14 @@
 "use client";
 import { Form, message } from "antd";
 import Link from "next/link";
-import {
-  CustomInput as Input,
-} from "@/lib/AntdComponent";
+import { CustomInput as Input } from "@/lib/AntdComponent";
 import { useRouter } from "next/navigation";
 import { useForgetPassMutation } from "@/services/auth";
 import { LoadingOutlined } from "@ant-design/icons";
+import { useState } from "react";
 const ForgetPass = () => {
+  const [email, setEmail] = useState("");
   const route = useRouter();
-  const email = localStorage.getItem("email");
   const [forgetPass, { isLoading }] = useForgetPassMutation();
   const handleforgetPass = () => {
     forgetPass(email)
@@ -47,7 +46,6 @@ const ForgetPass = () => {
                 htmlFor="Email"
                 className="block text-sm font-medium text-gray-700 mb-3"
               >
-                {" "}
                 Email{" "}
               </label>
 
@@ -57,6 +55,8 @@ const ForgetPass = () => {
                 id="email"
                 type="email"
                 name="email"
+                value={email}
+                onchange={(e) => setEmail(e.target.value)}
                 required
               />
             </div>

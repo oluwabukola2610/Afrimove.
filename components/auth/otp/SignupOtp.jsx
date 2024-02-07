@@ -6,11 +6,12 @@ import { useValidateOtpMutation } from "@/services/auth";
 import { LoadingOutlined } from "@ant-design/icons";
 import { Form, message } from "antd";
 import { useRouter } from "next/navigation";
+import { useStoredData } from "@/components/hook/useAuth";
 
 const SignupOtp = () => {
   const route = useRouter();
   const [code, setCode] = useState("");
-  const email = localStorage.getItem("email");
+  const {email} = useStoredData()
   const [validateOtp, { isLoading }] = useValidateOtpMutation();
   const handleOtp = () => {
     validateOtp({ otp: code, email })
