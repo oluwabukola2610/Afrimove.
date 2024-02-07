@@ -1,10 +1,11 @@
 "use client";
-import { useEffect, useState } from "react";
-import { useRouter, useSearchParams } from "next/router";
 import { useResetPassMutation } from "@/services/auth";
 import { Form, message } from "antd";
 import Link from "next/link";
-import { CustomPasswordInput as PasswordInput } from "@/lib/AntdComponent";
+import {
+  CustomInput as Input,
+  CustomPasswordInput as PasswordInput,
+} from "@/lib/AntdComponent";
 import { passwordSchema } from "@/lib/PasswordSchema";
 import { LoadingOutlined } from "@ant-design/icons";
 
@@ -33,8 +34,10 @@ const ResetPass = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!validationError) {
-      const { confirmPassword, ...dataToSend } = formData;
-      resetPass(dataToSend)
+      resetPass({
+        password: formData.password,
+        code: formData.passwordOtp,
+      })
         .unwrap()
         .then((res) => {
           console.log(res);
