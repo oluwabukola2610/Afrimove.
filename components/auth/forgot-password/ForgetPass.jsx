@@ -7,16 +7,16 @@ import { useForgetPassMutation } from "@/services/auth";
 import { LoadingOutlined } from "@ant-design/icons";
 import { useState } from "react";
 const ForgetPass = () => {
-  const [email, setEmail] = useState("");
+  const [data, setData] = useState("");
   const route = useRouter();
   const [forgetPass, { isLoading }] = useForgetPassMutation();
   const handleforgetPass = () => {
-    forgetPass(email)
+    forgetPass({email:data})
       .unwrap()
       .then((res) => {
         console.log(res);
         message.success(res.message);
-        route.replace("/login");
+        route.replace("/reset-password");
       })
       .catch((err) => {
         console.log(err);
@@ -51,13 +51,14 @@ const ForgetPass = () => {
 
               <Input
                 className="w-full "
-                placeholder="Email Address"
-                id="email"
+                placeholder="Email"
+                size="large"
+                required
                 type="email"
                 name="email"
-                value={email}
-                onchange={(e) => setEmail(e.target.value)}
-                required
+                value={data}
+                onChange={(e) => setData(e.target.value)}
+                id="Email"
               />
             </div>
             <button

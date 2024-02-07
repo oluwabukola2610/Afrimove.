@@ -14,7 +14,7 @@ import { useStoredData } from "@/components/hook/useAuth";
 
 const Signup = () => {
   const route = useRouter();
-  const { setEmail } = useStoredData;
+  const { setEmail } = useStoredData();
   const [validationError, setValidationError] = useState("");
   const [formData, setFormData] = useState({
     firstName: "",

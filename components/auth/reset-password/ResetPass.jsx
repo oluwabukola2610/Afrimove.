@@ -1,6 +1,6 @@
 "use client";
 import { useResetPassMutation } from "@/services/auth";
-import { Form, message } from "antd";
+import { Alert, Form, message } from "antd";
 import Link from "next/link";
 import {
   CustomInput as Input,
@@ -9,8 +9,10 @@ import {
 import { passwordSchema } from "@/lib/PasswordSchema";
 import { LoadingOutlined } from "@ant-design/icons";
 import { useState } from "react";
-
+import { useRouter } from "next/navigation";
 const ResetPass = () => {
+  const route = useRouter();
+
   const [resetPass, { isLoading }] = useResetPassMutation();
   const [formData, setFormData] = useState({
     password: "",
@@ -18,7 +20,7 @@ const ResetPass = () => {
     passwordOtp: "",
   });
   const [validationError, setValidationError] = useState("");
-
+  const [confirmValidation, setConfirmValidation] = useState("");
   const handleChange = (e) => {
     const { name, value } = e.target;
     if (name === "password") {
@@ -27,24 +29,29 @@ const ResetPass = () => {
         .then(() => setValidationError(""))
         .catch((error) => setValidationError(error.message));
     } else if (name === "confirmPassword") {
-      if (value !== formData.password) message.error("Passwords must match");
+      if (value !== formData.password)
+        setConfirmValidation("Passwords must match");
+      else setConfirmValidation(""); // Clear the validation message if passwords match
     }
     setFormData((prevState) => ({ ...prevState, [name]: value }));
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (!validationError) {
+  const handleSubmit = () => {
+    if (!validationError && !confirmValidation) {
       resetPass({
         password: formData.password,
         code: formData.passwordOtp,
       })
         .unwrap()
         .then((res) => {
-          console.log(res);
+          message.success(res.message);
+          route.replace("/login");
         })
         .catch((err) => {
           console.log(err);
+          message.error(
+            err?.data?.error || err?.message || "something went wrong"
+          );
         });
     }
   };
@@ -55,6 +62,9 @@ const ResetPass = () => {
         AfriMove<span className="text-blue-500">.</span>
       </Link>
       <div className="flex flex-col items-center justify-center mt-10 md:mt-16 lg:mt-24 space-y-6">
+        {confirmValidation && (
+          <Alert message={confirmValidation} type="error" showIcon />
+        )}{" "}
         <div className="text-center ">
           <h1 className="text-3xl font-bold md:text-4xl md:font-extrabold">
             Reset Password
@@ -64,7 +74,7 @@ const ResetPass = () => {
           </p>
         </div>
         <div className="p-6 w-full lg:max-w-md shadow-md rounded-md border bg-white/80">
-          <Form onSubmit={handleSubmit}>
+          <Form onFinish={handleSubmit}>
             <div className="mb-4">
               <label
                 htmlFor="pass-otp"
