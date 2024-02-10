@@ -29,21 +29,12 @@ const DashboardNav = () => {
 
   return (
     <>
-      <nav className="flex justify-between items-center px-5 py-3  border-b  border-b-gray-100 bg-[#FAFAFA] ">
+      <nav className="flex justify-between items-center px-5 py-3  border-b  border-b-gray-200 bg-[#FAFAFA] ">
         <h1 className="text-[20px] font-semibold">
           AfriMove<span className="text-blue-500">.</span>
         </h1>
         <div className="flex space-x-5 items-center ">
-          <div className="hidden lg:flex relative ">
-            <span className="absolute inset-y-0 start-0 grid w-10 place-content-center ">
-              <CiSearch className="text-gray-400 " />
-            </span>
-            <input
-              type="text"
-              placeholder="Search.."
-              className="w-full md:w-[320px] text-[16px] rounded-[24px] placeholder:text-gray-400 border-gray-200 border py-3 pe-0  sm:text-sm pl-8 ring-0  bg-transparent"
-            />
-          </div>
+         
           <span className="w-full items-center space-x-3 hidden lg:flex">
             <MdOutlineCalendarMonth size={18} />
             <p className="font-medium">{getCurrentDate()}</p>
