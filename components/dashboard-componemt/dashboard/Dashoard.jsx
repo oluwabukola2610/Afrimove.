@@ -62,7 +62,7 @@ const Dashboard = () => {
           <Link
             key={car._id}
             href={`/dashboard/details`}
-            className="border border-gray-200 p-4 rounded-md shadow-md flex flex-col space-y-3"
+            className="border border-gray-200 p-4 rounded-md bg-white shadow-sm flex flex-col space-y-3"
           >
             <div className="flex justify-between items-center ">
               <div className="space-x-4 items-center flex">

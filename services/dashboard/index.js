@@ -12,7 +12,7 @@ export const busApi = createApi({
         credentials: "include",
       }),
       transformResponse: (response) => {
-        return response?.data
+        return response?.data;
       },
     }),
   }),
