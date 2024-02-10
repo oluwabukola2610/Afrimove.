@@ -1,4 +1,4 @@
-import { Button, ConfigProvider, Input } from "antd";
+import { Button, ConfigProvider, Input, Tabs } from "antd";
 import { Archivo } from "next/font/google";
 
 const archivo = Archivo({ subsets: ["latin"] });
@@ -31,5 +31,23 @@ export const CustomInput = ({ ...props }) => (
     }}
   >
     <Input {...props} />
+  </ConfigProvider>
+);
+export const CustomTabs = ({ ...props }) => (
+  <ConfigProvider
+    theme={{
+      token: { ...primaryConfig },
+      components: {
+        Tabs: {
+          itemSelectedColor: "#000000",
+          colorLinkActive: "#000000",
+          itemColor: "#515B6F",
+          fontSize: 16,
+          fontWeightStrong: 600,
+        },
+      },
+    }}
+  >
+    <Tabs {...props} />
   </ConfigProvider>
 );

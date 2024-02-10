@@ -15,6 +15,17 @@ export const busApi = createApi({
         return response?.data;
       },
     }),
+    getBusDetails: builder.mutation({
+      query: (body) => ({
+        url: "/user/bus-data",
+        method: "POST",
+        credentials: "include",
+        body,
+      }),
+      transformResponse: (response) => {
+        return response?.data;
+      },
+    }),
   }),
 });
-export const { useGetBusQuery } = busApi;
+export const { useGetBusQuery ,useGetBusDetailsMutation} = busApi;

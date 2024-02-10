@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import { useState } from "react";
 import { Switch } from "antd";
 import React from "react";
@@ -28,11 +28,12 @@ const Dashboard = () => {
     }
   };
   const filteredCars = cars?.filter((car) => {
-    const matchesSearch = car.destination.toLowerCase().includes(searchQuery.toLowerCase());
+    const matchesSearch = car.destination
+      .toLowerCase()
+      .includes(searchQuery.toLowerCase());
     const matchesAvailability = !availableOnly || car.busStatus === "available";
     return matchesSearch && matchesAvailability;
   });
-
 
   return (
     <div className="max-w-[1640px] mx-auto p-4 h-screen overflow-y-scroll">
@@ -54,14 +55,18 @@ const Dashboard = () => {
           <p className="font-semibold uppercase text-[14px]">
             Available now only
           </p>
-          <Switch checked={availableOnly} onChange={(checked) => setAvailableOnly(checked)} />
+          <Switch
+            checked={availableOnly}
+            onChange={(checked) => setAvailableOnly(checked)}
+          />
         </div>
       </header>
       <main className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3 gap-6 mt-5">
         {filteredCars?.map((car) => (
           <Link
             key={car._id}
-            href={`/dashboard/details`}
+            href={`/details/[id]`}
+            as={`/details/${car.busId}`}
             className="border border-gray-200 p-4 rounded-md bg-white shadow-sm flex flex-col space-y-3"
           >
             <div className="flex justify-between items-center ">
@@ -74,7 +79,9 @@ const Dashboard = () => {
                   </p>
                 </div>
                 <span
-                  className={`${getStatusColor(car.busStatus)} text-xs p-1 inline-block rounded-md capitalize`}
+                  className={`${getStatusColor(
+                    car.busStatus
+                  )} text-xs p-1 inline-block rounded-md capitalize`}
                 >
                   {car.busStatus}
                 </span>
