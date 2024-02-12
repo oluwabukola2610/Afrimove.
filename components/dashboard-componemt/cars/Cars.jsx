@@ -8,7 +8,7 @@ import { BiWalk } from "react-icons/bi";
 import { useGetBusQuery } from "@/services/dashboard";
 import Link from "next/link";
 
-const Dashboard = () => {
+const Cars = () => {
   const { data: cars, isLoading } = useGetBusQuery();
   const [searchQuery, setSearchQuery] = useState("");
   const [availableOnly, setAvailableOnly] = useState(false);
@@ -65,8 +65,8 @@ const Dashboard = () => {
         {filteredCars?.map((car) => (
           <Link
             key={car._id}
-            href={`/details/[id]`}
-            as={`/details/${car.busId}`}
+            href={`/cars/${car.busId}`}
+            as={`/cars/${car.busId}`}
             className="border border-gray-200 p-4 rounded-md bg-white shadow-sm flex flex-col space-y-3"
           >
             <div className="flex justify-between items-center ">
@@ -104,4 +104,4 @@ const Dashboard = () => {
   );
 };
 
-export default Dashboard;
+export default Cars;

@@ -26,7 +26,7 @@ const Login = () => {
       .unwrap()
       .then((res) => {
         message.success(res.message);
-        route.replace("/dashboard");
+        route.replace("/cars");
       })
       .catch((err) => {
         console.log(err);
